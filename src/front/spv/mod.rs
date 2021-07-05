@@ -413,9 +413,9 @@ pub struct Parser<I> {
 }
 
 impl<I: Iterator<Item = u32>> Parser<I> {
-    pub fn new(data: I, options: &Options) -> Self {
+    pub fn new<IntoIter: IntoIterator<IntoIter=I>>(data: IntoIter, options: &Options) -> Self {
         Parser {
-            data,
+            data: data.into_iter(),
             state: ModuleState::Empty,
             layouter: Layouter::default(),
             temp_bytes: Vec::new(),
